@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Genetic Dynasties Simulator</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="Styles/style.css">
+    </head>
+    <body oncontextmenu="return false;">
+        <div class='container' id='content'>
+        	<div class='main' id='main-display'>
+        		<div class='header' id='dyn-nav'>
+        			<div class='sub-header' id='cur-dyn'>
+        				<span class='icon' id='dyn-icon'></span>
+        				<h3 class='dynasty' id='dyn-name'></h3>
+        			</div>
+        			<button class='btn btn-header' id='dyn-selector'>Select A Dynasty</button>
+        			<button class='btn btn-header' id='dyn-creator'>Create A Dynasty</button>
+        		</div>
+        		<div class='main-content' id='dyn-content'>
+        			<h2 id='no-dyn'>No Dynasty Selected</h2>
+        		</div>
+        	</div>
+        	
+        	
+<!--         	Dynasty Selector Overlay -->
+        	<div class='overlay' id='dyn-selector-overlay'>
+        		<div class='dyn-search overlay-header' id='dyn-selector-search'>
+        			<label for='dyn-selector-search-input'>Search: </label>
+        			<input type='text' id='dyn-selector-search-input'></input>
+        			<button type="button" class="close">
+          				<span aria-hidden="true">&times;</span>
+       				</button>
+        		</div>
+        		<hr>
+        		<div class='search-results' id='dyn-selector-search-results'>
+        			<div class='table-header-container'>
+        				<table class='search-table-header-row table'>
+        					<thead>
+        						<tr>
+        							<th class='search-crest-head'>Crest</th>
+        							<th class='search-name-head'>Dynasty Name</th>
+        							<th class='search-dyn-name-head'>Founder</th>
+        							<th>Members</th>
+        							<th>Primary Members</th>
+        						</tr>
+        					</thead>
+        				</table>
+        			</div>
+        			<div class='table-body-container'>
+        				<table class='search-table table-striped table-hover table'>
+        					<tbody id='search-table-body'>
+        					</tbody>
+        				</table>
+        			</div>
+        		</div>
+        	</div>
+        	
+<!--         	Dynasty Creator Overlay -->
+        	<div class='overlay' id='dyn-creator-overlay'>
+        		<div class='dyn-creator-header overlay-header' id='dyn-creator-header'>
+        			<label for='dyn-creator-name-input'>Dynasty Name: </label>
+        			<input type='text' id='dyn-creator-name-input' maxlength='30'></input>
+        			<button type="button" class="close">
+          				<span aria-hidden="true">&times;</span>
+       				</button>
+        		</div>
+        		<hr>
+        		<div class='dyn-creator-interface' id='dyn-creator-interface-body'>
+        			<div class='crest-designer' id='crest-designer'>
+						<span id='crest-label'>Dynasty Crest: </span>
+						<span class='crest-design' id='crest-design-display'>
+							<div class='crest-design-container' id='crest-design-container'>
+							
+							</div>
+						</span>
+						<span class='crest-editor' id='crest-editor'>
+							<table class='crest-editor-organizer' id='crest-editor-organizer'>
+								<tr>
+									<td class='crest-edit-label'>Crest Style: </td>
+									<td><button class='cycle-btn crest-style-btn btn' id='crest-style-down'>&#8249;</button></td>
+									<td id='crest-style-id'>1</td>
+									<td><button class='cycle-btn crest-style-btn btn' id='crest-style-up'>&#8250;</button></td>
+								</tr>
+								<tr>
+									<td class='crest-edit-label'>Crest Design: </td>
+									<td><button class='cycle-btn crest-design-btn btn' id='crest-design-down'>&#8249;</button></td>
+									<td id='crest-design-id'>1</td>
+									<td><button class='cycle-btn crest-design-btn btn' id='crest-design-up'>&#8250;</button></td>
+								</tr>
+								<tr>
+									<td class='crest-edit-label'>Primary Color: </td>
+									<td>R: <input type='number' class='color-input' id='primary-red' min='0' max='255'></input></td>
+									<td>G: <input type='number' class='color-input' id='primary-green' min='0' max='255'></input></td>
+									<td>B: <input type='number' class='color-input' id='primary-blue' min='0' max='255'></input></td>
+								</tr>
+								<tr>
+									<td class='crest-edit-label'>Secondary Color: </td>
+									<td>R: <input type='number' class='color-input' id='secondary-red' min='0' max='255'></input></td>
+									<td>G: <input type='number' class='color-input' id='secondary-green' min='0' max='255'></input></td>
+									<td>B: <input type='number' class='color-input' id='secondary-blue' min='0' max='255'></input></td>
+								</tr>
+							</table>
+						</span>
+        			</div>
+        			<hr>
+        			<div class='founder-designer' id='founder-designer'>
+        				<div id='founder-label'>Dynasty Founder: </div>
+        				<div class='temp-founder-display' id='temp-founder-display'>
+        					<span class='founder-name-display'>No Founder Created</span>
+        					<span><button class='founder-btn btn' id='custom-founder'>Create Custom Founder</button></span>
+        					<span><button class='founder-btn btn' id='random-founder'>Create Random Founder</button></span>
+        				</div>
+        				<div class='founder-display' id='founder-display'>
+        					<span class='founder-name-display' id='founder-name-display'></span>
+        					<span><button class='founder-btn btn' id='view-founder-btn'>View Founder</button></span>
+        					<span><button class='founder-btn btn' id='edit-founder-btn'>Edit Founder</button></span>
+        				</div>
+
+
+        			</div>
+        			<hr>
+        			<div class='dynasty-submission' id='dynasty-submission'>
+        				<button class='dyn-submit-btn btn' id='dyn-create-cancel'>Cancel</button>
+        				<button type='submit' class='dyn-submit-btn btn' id='dyn-create-submit'>Create Dynasty</button>
+        			</div>
+        		</div>
+        	</div>
+        	
+			<!--         	Founder Creation/Editor -->
+        	<div class='overlay' id='founder-create-edit-view-overlay'>
+        		<div class='dyn-creator-header overlay-header' id='dyn-creator-header'>
+        			<label for='dyn-founder-name-input'>Founder Name: </label>
+        			<input type='text' id='dyn-founder-name-input' maxlength='30'></input>
+        			<button type="button" class="close">
+          				<span aria-hidden="true">&times;</span>
+       				</button>
+        		</div>
+        		<hr>
+        		<div class='founder-interface' id='founder-interface-body'>
+        		
+        		</div>
+        	</div>
+        	
+        	<!--         	Member Info Overlay -->
+        	<div class='overlay' id='mem-info-overlay'>
+        		<div class='mem-info overlay-header' id='mem-info-header'>
+        			<span id='mem-info-crest'></span>
+        			<span id='mem-info-name'></span>
+        			<button type="button" class="close">
+          				<span aria-hidden="true">&times;</span>
+       				</button>
+        		</div>
+        		<hr>
+        		<div class='mem-dynam-opt'>
+        			
+        		</div>
+        		<hr>
+        		<div class='row mem-info-row'>
+        			<div class='mem-info-container col' id='mem-info-display-container'>
+        			
+        			</div>
+        			<div class='mem-info-container col' id='mem-rel-display-container'>
+        			
+        			</div>
+        		</div>
+        	</div>
+        	
+        </div>
+        
+        <script src="Scripts/jquery-3.0.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<script src="Scripts/SVGCrests.js"></script>
+		<script src="Scripts/memberInfoDisplay.js"></script>
+		<script src="Scripts/dynastyDisplay.js"></script>
+		<script src="Scripts/memberActions.js"></script>
+		<script src="Scripts/dynastySelection.js"></script>
+		<script src="Scripts/dynastyCreation.js"></script>
+		<script src="Scripts/main.js"></script>
+    </body>
+</html>
